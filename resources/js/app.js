@@ -34,7 +34,9 @@ import { createRouter, createWebHistory } from 'vue-router';
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
+
 import App from './components/App.vue';
+import MainNavbar from './components/Header.vue';
 import TaskList from './components/TaskList.vue';
 import TaskOption from './components/TaskOption.vue';
 import Task from './components/Task.vue';

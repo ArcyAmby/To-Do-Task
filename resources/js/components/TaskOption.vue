@@ -13,7 +13,11 @@
           </div>
           <div class="mb-3">
             <label for="status" class="form-label">Status:</label>
-            <input class="form-control" type="text" id="status" v-model="task.status" required />
+            <select class="form-select" aria-level="Select status" id="status" v-model="task.status" required>
+                <option value="Pending" selected>Pending</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Done">Completed</option>
+            </select>
           </div>
           <button type="submit" v-if="isNewTask" class="btn btn-primary">Add Task</button>
           <button type="submit" v-else class="btn btn-primary">Update Task</button>
