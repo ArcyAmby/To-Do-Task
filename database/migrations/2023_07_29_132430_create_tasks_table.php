@@ -16,12 +16,14 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('status');
+            $table->string('file_name')->nullable(); // Add a new column to store the file name
+            $table->string('file_path')->nullable(); // Add a new column to store the file path
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations.php 
      */
     public function down(): void
     {

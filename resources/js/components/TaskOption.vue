@@ -19,6 +19,10 @@
                 <option value="Done">Completed</option>
             </select>
           </div>
+          <div class="mb-3">
+            <label for="file" class="form-label">File:</label>
+            <input type="file" id="file" @change="onFileChange" />
+          </div>
           <button type="submit" v-if="isNewTask" class="btn btn-primary">Add Task</button>
           <button type="submit" v-else class="btn btn-primary">Update Task</button>
         </form>
@@ -35,6 +39,8 @@
           title: '',
           description: '',
           status: '',
+          file: null, // Store the selected file
+          
         }
       }
     },
@@ -43,16 +49,45 @@
         return !this.$route.path.includes('edit');
       }
     },
+
     async created() {
       if (!this.isNewTask) {
         const response = await axios.get(`/api/tasks/${this.$route.params.id}`);
         this.task = response.data;
       }
     },
+
     methods: {
+
+          // Method to handle file selection
+        onFileChange(event) {
+          this.task.file = event.target.files[0];
+        },
+
       async submitForm() {
         try {
           if (this.isNewTask) {
+             // Perform file upload if a file is selected
+            if (this.task.file) {
+            const formData = new FormData();
+            formData.append('file', this.task.file);
+
+            // Upload the file to the server (backend) using Laravel's storage functionality
+            try {
+                const response = await axios.post('/api/tasks/upload-file', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                // Set the file name and path returned from the server to the task object
+                this.task.file_name = response.data.file_name;
+                this.task.file_path = response.data.file_path;
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        }
+            
             await axios.post('/api/tasks', this.task);
           } else {
             await axios.put(`/api/tasks/${this.$route.params.id}`, this.task);

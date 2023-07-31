@@ -7,6 +7,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
                 <th scope="col">Status</th>
+                <th scope="col">Uploaded File</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -16,6 +17,15 @@
                     <td>{{ task.title }}</td>
                     <td>{{ task.description }}</td>
                     <td>{{ task.status }}</td>
+                    <td>
+                      <!-- Show the file name if available -->
+                      <span v-if="task.file_name">
+                          {{ task.file_name }}
+                          <!-- Provide a link to download or view the file -->
+                          <a :href="task.file_path" target="_blank">Download</a>
+                      </span>
+                      <span v-else>No File Uploaded</span>
+                  </td>
                     <td>
                       <div class="row gap-3">
                         <router-link :to="`/tasks/${task.id}`" :style="{ backgroundColor: buttonColor }" class="p-2 col border btn "><i class="fas fa-eye"></i></router-link>

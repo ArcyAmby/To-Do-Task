@@ -13,5 +13,7 @@ class Task extends Model
         'title',
         'description',
         'status',
+        'file_name', // Add the new column to the $fillable array
+        'file_path', // Add the new column to the $fillable array
     ];
 }
