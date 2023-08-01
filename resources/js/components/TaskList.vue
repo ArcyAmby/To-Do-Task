@@ -6,7 +6,10 @@
       <p>Loading...</p>
       <!-- You can also use a spinner here -->
     </div>
-    <table v-else class="table">
+    
+    <div v-else class="container-fluid mt-4">
+    <div class="table-responsive">
+    <table class="table">
       <thead>
         <tr>
           <th scope="col">
@@ -94,6 +97,8 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  </div>
 
     <!-- New Task Modal -->
     <div v-if="showModal" class="modal">
@@ -429,5 +434,59 @@ border-style: none;
   color: var(--secondary-color);
 }
 
+@media (max-width: 767px) {
+  .table thead {
+    display: none; /* Hide the table header on mobile */
+  }
+
+  .table tbody tr {
+    display: block; /* Convert table rows to blocks on mobile */
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .table tbody td {
+    /* Reset styles and add new styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px;
+  }
+
+  /* Only show the title and actions on mobile */
+  .table tbody td:nth-child(1) {
+    display: none;
+  }
+
+  .table tbody td:nth-child(2) {
+    order: 1;
+    width: 100%;
+  }
+
+  .table tbody td:nth-child(3) {
+    order: 2;
+    width: 100%;
+  }
+
+  .table tbody td:nth-child(4) {
+    display: none;
+  }
+
+  .table tbody td:nth-child(5) {
+    display: none;
+  }
+
+  .table tbody td:nth-child(6) {
+    display: none;
+  }
+
+  .table tbody td:nth-child(7) {
+    order: 2;
+    width: 100%;
+  }
+}
 
 </style>
