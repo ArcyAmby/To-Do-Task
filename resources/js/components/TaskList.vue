@@ -131,7 +131,6 @@
         <div class="modal-task-detail">
         <!-- Display the task details in the view modal -->
         <p><strong>Task #:</strong> {{ taskToView.id }}</p>
-        <p><strong>Title:</strong> {{ taskToView.title }}</p>
         <p><strong>Description:</strong> {{ taskToView.description }}</p>
         <p><strong>Status:</strong> {{ taskToView.status }}</p>
         <div v-if="taskToView.file_path">
@@ -153,21 +152,40 @@
         <button type="button" class="close" @click="showEditModal = false">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="modal-task-detail">
-        <!-- Include the TaskOption component within the edit modal -->
-        <TaskOption :isNewTask="false" :task="taskToEdit" @task-updated="onUpdateTask" />
-        <div v-if="taskToEdit.file_path">
-          <p><strong>Attached File:</strong> <a :href="taskToEdit.file_path" target="_blank">{{ taskToEdit.file_name }}</a></p>
-        </div>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button @click="updateTask()" type="button" class="btn btn-primary">Update Task</button>
-        <button type="button" class="btn btn-secondary" @click="showEditModal = false">Cancel</button>
+        <form @submit.prevent="updateTask">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input class="form-control" type="text" id="title" v-model="taskToEdit.title" required />
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea class="form-control" id="description" v-model="taskToEdit.description" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="status" class="form-label">Status:</label>
+            <select class="form-select" aria-label="Select status" id="status" v-model="taskToEdit.status" required>
+              <option value="Pending" selected>Pending</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Done">Completed</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="file" class="form-label">File:</label>
+            <input type="file" id="file" @change="onFileChange" accept=".pdf" />
+            <div v-if="taskToEdit.file_path">
+              <p><strong>Attached File:</strong> <a :href="taskToEdit.file_path" target="_blank">{{ taskToEdit.file_name }}</a></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Update Task</button>
+            <button type="button" class="btn btn-secondary" @click="showEditModal = false">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
+
 
   </div>
 </template>

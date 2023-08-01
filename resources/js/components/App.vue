@@ -268,9 +268,6 @@ export default {
   margin-bottom: 10px;
 }
 
-
-
-
 @media (max-width: 767px) {
   /* Center the buttons vertically on small screens */
   .app-header {

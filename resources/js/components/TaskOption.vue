@@ -2,29 +2,51 @@
   <div>
     <h2 v-if="isNewTask"></h2>
     <h2 v-else></h2>
-    <form @submit.prevent="submitForm">
-      <div class="mb-3">
-        <label for="title" class="form-label">Title:</label>
-        <input class="form-control" type="text" id="title" v-model="task.title" required />
+    <form @submit.prevent="submitForm" class="modal-form">
+      <div class="container">
+        <div class="row mb-3">
+          <label for="title" class="col-sm-2 col-form-label">Title:</label>
+          <div class="col-sm-12">
+            <input class="form-control" type="text" id="title" v-model="task.title" required />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="description" class="col-sm-2 col-form-label">Description:</label>
+          <div class="col-sm-12">
+            <textarea class="form-control" id="description" v-model="task.description" required></textarea>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label">Status:</label>
+          <div class="col-sm-10">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="pending" value="Pending" v-model="task.status" required>
+              <label class="form-check-label" for="pending">Pending</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="ongoing" value="Ongoing" v-model="task.status" required>
+              <label class="form-check-label" for="ongoing">Ongoing</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="completed" value="Completed" v-model="task.status" required>
+              <label class="form-check-label" for="completed">Completed</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="file" class="col-sm-2 col-form-label">File:</label>
+          <div class="col-sm-12">
+            <input type="file" id="file" @change="onFileChange" accept=".pdf" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary" v-if="isNewTask">Add Task</button>
+            <!-- <button type="submit" class="btn btn-primary" v-else>Update Task</button> -->
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Description:</label>
-        <textarea class="form-control" id="description" v-model="task.description" required></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="status" class="form-label">Status:</label>
-        <select class="form-select" aria-level="Select status" id="status" v-model="task.status" required>
-          <option value="Pending" selected>Pending</option>
-          <option value="Ongoing">Ongoing</option>
-          <option value="Done">Completed</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="file" class="form-label">File:</label>
-        <input type="file" id="file" @change="onFileChange" />
-      </div>
-      <button type="submit" class="btn btn-primary" v-if="isNewTask">Add Task</button>
-      <!-- <button type="submit" class="btn btn-primary" v-else>Update Task</button> -->
     </form>
   </div>
 </template>
@@ -51,7 +73,30 @@ export default {
   methods: {
     // Method to handle file selection
     onFileChange(event) {
-      this.task.file = event.target.files[0];
+      const file = event.target.files[0];
+      if (file) {
+        // Validate if the selected file is a PDF
+        if (!file.type.includes('pdf')) {
+          // Show a warning message if the file is not a PDF
+          this.isPdfFile = false;
+          this.errorMessage = 'Only PDF files are allowed.';
+          return;
+        }
+
+        // Update the taskToEdit.file data to the new file
+        this.taskToEdit.file = file;
+
+        // Clear the error message if the selected file is a PDF
+        this.isPdfFile = true;
+        this.errorMessage = '';
+
+        // Create a FileReader to read the file and display its name
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.filePreview = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
     },
     async submitForm() {
       try {
@@ -112,5 +157,5 @@ export default {
 </script>
 
 <style>
-/* ... (existing style code) ... */
+
 </style>

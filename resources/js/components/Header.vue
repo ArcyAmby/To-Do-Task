@@ -10,13 +10,13 @@
 
       <!-- Add Font Awesome icons for LinkedIn, Discord, and GitHub -->
       <div class="icons-container">
-        <a href="#" class="icon-link" @mouseover="hoveredIcon = 'linkedin'" @mouseout="hoveredIcon = ''">
+        <a href="https://www.linkedin.com/in/arsenio-ambayec" target="_blank" class="icon-link" @mouseover="hoveredIcon = 'linkedin'" @mouseout="hoveredIcon = ''">
           <i :class="['fab', 'fa-linkedin-in', { 'hovered': hoveredIcon === 'linkedin' }]"></i>
         </a>
-        <a href="#" class="icon-link" @mouseover="hoveredIcon = 'discord'" @mouseout="hoveredIcon = ''">
+        <a href="#" target="_blank" class="icon-link" @mouseover="hoveredIcon = 'discord'" @mouseout="hoveredIcon = ''">
           <i :class="['fab', 'fa-discord', { 'hovered': hoveredIcon === 'discord' }]"></i>
         </a>
-        <a href="#" class="icon-link" @mouseover="hoveredIcon = 'github'" @mouseout="hoveredIcon = ''">
+        <a href="https://github.com/ArcyAmby" target="_blank" class="icon-link" @mouseover="hoveredIcon = 'github'" @mouseout="hoveredIcon = ''">
           <i :class="['fab', 'fa-github', { 'hovered': hoveredIcon === 'github' }]"></i>
         </a>
       </div>
@@ -60,6 +60,6 @@ export default {
 
 .logo-text{
   font-size: 12px;
-  
+
 }
 </style>
