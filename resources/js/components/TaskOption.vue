@@ -13,22 +13,22 @@
         <div class="row mb-3">
           <label for="description" class="col-sm-2 col-form-label">Description:</label>
           <div class="col-sm-12">
-            <textarea class="form-control" id="description" v-model="task.description" required></textarea>
+            <textarea class="form-control" id="description" v-model="task.description" ></textarea>
           </div>
         </div>
         <div class="row mb-3">
           <label class="col-sm-2 col-form-label">Status:</label>
           <div class="col-sm-10">
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="pending" value="Pending" v-model="task.status" required>
+              <input class="form-check-input" type="radio" id="pending" value="Pending" v-model="task.status">
               <label class="form-check-label" for="pending">Pending</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="ongoing" value="Ongoing" v-model="task.status" required>
+              <input class="form-check-input" type="radio" id="ongoing" value="Ongoing" v-model="task.status">
               <label class="form-check-label" for="ongoing">Ongoing</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="completed" value="Completed" v-model="task.status" required>
+              <input class="form-check-input" type="radio" id="completed" value="Completed" v-model="task.status">
               <label class="form-check-label" for="completed">Completed</label>
             </div>
           </div>
@@ -36,7 +36,8 @@
         <div class="row mb-3">
           <label for="file" class="col-sm-2 col-form-label">File:</label>
           <div class="col-sm-12">
-            <input type="file" id="file" @change="onFileChange" accept=".pdf" />
+            <p class="text-muted">Accepted file formats: PDF, DOC, DOCX</p>
+            <input type="file" id="file" @change="onFileChange" accept=".pdf, .doc, .docx" />
           </div>
         </div>
         <div class="row">
@@ -73,7 +74,25 @@ export default {
   methods: {
     
     onFileChange(event) {
+      const file = event.target.files[0];
+      const validFormats = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
+      
+      if (file) {
+        // Check if the file format is valid
+        if (!validFormats.includes(file.type)) {
+          // Show a warning message that the format is not accepted
+          alert("Please upload a valid document (PDF, Word, or Excel).");
+          // Clear the file input to prevent submission of invalid file
+          event.target.value = "";
+          return;
+        }
+
       this.task.file = event.target.files[0];
+      }
     },
     async submitForm() {
       try {

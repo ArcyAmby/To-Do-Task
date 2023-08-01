@@ -127,7 +127,6 @@
       </div>
       <div class="modal-body">
         <div class="modal-task-detail">
-        <p><strong>Task #:</strong> {{ taskToView.id }}</p>
         <p><strong>Description:</strong> {{ taskToView.description }}</p>
         <p><strong>Status:</strong> {{ taskToView.status }}</p>
         <div v-if="taskToView.file_path">
@@ -154,7 +153,7 @@
           </div>
           <div class="mb-3">
             <label for="description" class="form-label">Description:</label>
-            <textarea class="form-control" id="description" v-model="taskToEdit.description" required></textarea>
+            <textarea class="form-control" id="description" v-model="taskToEdit.description"></textarea>
           </div>
           <div class="mb-3">
             <label class="form-label">Status:</label>
@@ -166,7 +165,6 @@
                 id="statusPending"
                 value="Pending"
                 v-model="taskToEdit.status"
-                required
               />
               <label class="form-check-label" for="statusPending">Pending</label>
             </div>
@@ -178,7 +176,6 @@
                 id="statusOngoing"
                 value="Ongoing"
                 v-model="taskToEdit.status"
-                required
               />
               <label class="form-check-label" for="statusOngoing">Ongoing</label>
             </div>
@@ -190,7 +187,6 @@
                 id="statusCompleted"
                 value="Completed"
                 v-model="taskToEdit.status"
-                required
               />
               <label class="form-check-label" for="statusCompleted">Completed</label>
             </div>
