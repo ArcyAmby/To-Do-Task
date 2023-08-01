@@ -73,30 +73,7 @@ export default {
   methods: {
     // Method to handle file selection
     onFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        // Validate if the selected file is a PDF
-        if (!file.type.includes('pdf')) {
-          // Show a warning message if the file is not a PDF
-          this.isPdfFile = false;
-          this.errorMessage = 'Only PDF files are allowed.';
-          return;
-        }
-
-        // Update the taskToEdit.file data to the new file
-        this.taskToEdit.file = file;
-
-        // Clear the error message if the selected file is a PDF
-        this.isPdfFile = true;
-        this.errorMessage = '';
-
-        // Create a FileReader to read the file and display its name
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.filePreview = reader.result;
-        };
-        reader.readAsDataURL(file);
-      }
+      this.task.file = event.target.files[0];
     },
     async submitForm() {
       try {

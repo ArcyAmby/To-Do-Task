@@ -162,12 +162,43 @@
             <textarea class="form-control" id="description" v-model="taskToEdit.description" required></textarea>
           </div>
           <div class="mb-3">
-            <label for="status" class="form-label">Status:</label>
-            <select class="form-select" aria-label="Select status" id="status" v-model="taskToEdit.status" required>
-              <option value="Pending" selected>Pending</option>
-              <option value="Ongoing">Ongoing</option>
-              <option value="Done">Completed</option>
-            </select>
+            <label class="form-label">Status:</label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="status"
+                id="statusPending"
+                value="Pending"
+                v-model="taskToEdit.status"
+                required
+              />
+              <label class="form-check-label" for="statusPending">Pending</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="status"
+                id="statusOngoing"
+                value="Ongoing"
+                v-model="taskToEdit.status"
+                required
+              />
+              <label class="form-check-label" for="statusOngoing">Ongoing</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="status"
+                id="statusCompleted"
+                value="Completed"
+                v-model="taskToEdit.status"
+                required
+              />
+              <label class="form-check-label" for="statusCompleted">Completed</label>
+            </div>
           </div>
           <div class="mb-3">
             <label for="file" class="form-label">File:</label>
