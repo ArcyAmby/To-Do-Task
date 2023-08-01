@@ -1,23 +1,21 @@
 <template>
   <div class="container-fluid m-0">
+    <Header />
     <header>
-      <div class="app-header px-3 py-2 w-auto text-white">
+      <div class="app-header w-auto">
         <div class="container">
           <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <router-link to="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-              <img src="/assets/img/logo.png" alt="logo-todo" style="height:60px; padding-top: 4px; padding-bottom: 4px;"/>
-            </router-link>
+            
             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
               <li>
-                <router-link to="/" class="nav-link text-white" style="text-decoration: none; color: white;">
-                  <i class="fas fa-home"></i>
-                  Home
-                </router-link>
+                <button class="fancy-button home-button" @click="goHome">
+                  <i class="fas fa-home"></i> Home
+                </button>
               </li>
               <li>
                 <!-- Open the modal for new task creation -->
-                <button @click="showNewTaskModal" class="nav-link text-white btn" style="text-decoration: none; color: white;">
-                  <i class="fas fa-plus-circle"></i>
+                <button @click="showNewTaskModal" class="fancy-button new-task-button">
+                  <i class="fas fa-plus"></i>
                   New Task
                 </button>
               </li>
@@ -40,13 +38,13 @@
     <!-- New Task Modal -->
     <div v-if="showModal" class="modal">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content fancy-modal">
           <div class="modal-header text-white">
             <h3 class="modal-title">New Task</h3>
             <button type="button" class="close" @click="showModal = false">&times;</button>
           </div>
           <div class="modal-body">
-            <i v-if="!isSaving" class="fas fa-plus-circle"></i>
+            <i v-if="!isSaving" class=""></i>
             <i v-else class="fas fa-spinner fa-spin"></i>
             <!-- Include the TaskOption component within the modal -->
             <TaskOption :isNewTask="true" :task="emptyTask" @task-created="createTask" @new-task-created="onNewTaskCreated"
@@ -56,7 +54,7 @@
         </div>
       </div>
     </div>
-
+    <Footer />
   </div>
 </template>
 
@@ -174,6 +172,7 @@ export default {
 <style>
 :root {
   --primary-color: #101820FF;
+  --primary-light: #40464D;
   --secondary-color: #F2AA4CFF;
 }
 
@@ -183,8 +182,9 @@ export default {
 }
 
 .app-header {
-  background-color: var(--primary-color);
+  background-color: var(--primary-light);
 }
+
 
 /* Style the modal */
 .modal {
@@ -221,4 +221,62 @@ export default {
   margin-right: 10px;
   border-style: none;
 }
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.fancy-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  color: var(--primary-color);
+  border: none;
+  padding: 6px 18px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.fancy-button i {
+  margin-right: 10px;
+}
+
+.fancy-button:hover {
+  background-color: #E89F36FF;
+}
+
+.design-modal {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Align text to the left in the New Task Modal */
+.modal-body {
+  text-align: left;
+}
+
+ /* Add space between the buttons on small screens */
+ .nav li {
+  margin-bottom: 10px;
+}
+
+
+
+
+@media (max-width: 767px) {
+  /* Center the buttons vertically on small screens */
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
 </style>

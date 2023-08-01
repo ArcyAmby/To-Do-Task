@@ -56,8 +56,10 @@
             <!-- Show the file name if available -->
             <span v-if="task.file_name">
               {{ task.file_name }}
+              <div class="file-link">
               <!-- Provide a link to download or view the file -->
-              <a :href="task.file_path" target="_blank">Download</a>
+              <a :href="task.file_path" target="_blank" class="download-link"><i class="fas fa-download"></i></a>
+              </div>
             </span>
             <span v-else>No File Uploaded</span>
           </td>
@@ -69,13 +71,13 @@
             </div>
             <div v-else>
             <div class="row gap-3">
-              <button @click="toggleViewModal(task)" class="p-2 col border btn" :style="{ backgroundColor: buttonColor }">
+              <button @click="toggleViewModal(task)" class="list-button p-2 col border btn">
                 <i class="fas fa-eye"></i> 
               </button>
-              <button @click="toggleEditModal(task)" class="p-2 col border btn" :style="{ backgroundColor: buttonColor }">
+              <button @click="toggleEditModal(task)" class="list-button p-2 col border btn">
                 <i class="fas fa-pencil-alt"></i> 
               </button>
-              <button @click="showDeleteModal(task)" type="button" :style="{ backgroundColor: buttonColor }" class="p-2 col border">
+              <button @click="showDeleteModal(task)" type="button" class="list-button p-2 col border">
                 <i
                 class="fas fa-trash"
               ></i>
@@ -117,10 +119,11 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header text-white">
-        <h3 class="modal-title">View Task</h3>
+        <h3 class="modal-title">{{ taskToView.title }}</h3>
         <button type="button" class="close" @click="showViewModal = false">&times;</button>
       </div>
       <div class="modal-body">
+        <div class="modal-task-detail">
         <!-- Display the task details in the view modal -->
         <p><strong>Task #:</strong> {{ taskToView.id }}</p>
         <p><strong>Title:</strong> {{ taskToView.title }}</p>
@@ -129,6 +132,7 @@
         <div v-if="taskToView.file_path">
           <p><strong>Attached File:</strong> <a :href="taskToView.file_path" target="_blank">{{ taskToView.file_name }}</a></p>
         </div>
+      </div>
       </div>
       <!-- You can add footer buttons if necessary -->
     </div>
@@ -144,11 +148,13 @@
         <button type="button" class="close" @click="showEditModal = false">&times;</button>
       </div>
       <div class="modal-body">
+        <div class="modal-task-detail">
         <!-- Include the TaskOption component within the edit modal -->
         <TaskOption :isNewTask="false" :task="taskToEdit" @task-updated="onUpdateTask" />
         <div v-if="taskToEdit.file_path">
           <p><strong>Attached File:</strong> <a :href="taskToEdit.file_path" target="_blank">{{ taskToEdit.file_name }}</a></p>
         </div>
+      </div>
       </div>
       <div class="modal-footer">
         <button @click="updateTask()" type="button" class="btn btn-primary">Update Task</button>
@@ -176,7 +182,6 @@ export default {
     return {
       isLoading: true,
       showModal: false,
-      buttonColor: '#F2AA4CFF',
       taskToDelete: null,
       isDeleting: false,
       loadingTasks: [],
@@ -397,4 +402,32 @@ background-color: var(--secondary-color);
 margin-right: 10px;
 border-style: none;
 }
+
+.list-button{
+  background: #fff;
+  transition: color 0.3s ease;
+}
+.list-button:hover{
+  background: var(--secondary-color);
+}
+
+.modal-task-detail {
+  text-align: left;
+  /* Add more custom styles as needed */
+}
+
+/* Style for input forms */
+.modal-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.download-link i{
+  color: var(--secondary-color);
+}
+
+
 </style>

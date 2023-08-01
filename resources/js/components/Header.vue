@@ -1,46 +1,65 @@
 <template>
-    <div>
-        <b-navbar toggleable="lg" type="dark" variant="info">
-          <b-navbar-brand href="#">NavBar</b-navbar-brand>
+  <header>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <router-link to="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+        <img src="/assets/img/logo.png" alt="logo-todo" style="height:60px; padding-top: 8px; padding-bottom: 8px;"/>
+        <p class="logo-text">Simple To Do List with CRUD</p>
+      </router-link>
       
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      
-          <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav>
-              <b-nav-item href="#">Link</b-nav-item>
-              <b-nav-item href="#" disabled>Disabled</b-nav-item>
-            </b-navbar-nav>
-      
-            <!-- Right aligned nav items -->
-            <b-navbar-nav class="ml-auto">
-              <b-nav-form>
-                <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-              </b-nav-form>
-      
-              <b-nav-item-dropdown text="Lang" right>
-                <b-dropdown-item href="#">EN</b-dropdown-item>
-                <b-dropdown-item href="#">ES</b-dropdown-item>
-                <b-dropdown-item href="#">RU</b-dropdown-item>
-                <b-dropdown-item href="#">FA</b-dropdown-item>
-              </b-nav-item-dropdown>
-      
-              <b-nav-item-dropdown right>
-                <!-- Using 'button-content' slot -->
-                <template #button-content>
-                  <em>User</em>
-                </template>
-                <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-              </b-nav-item-dropdown>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-navbar>
+
+      <!-- Add Font Awesome icons for LinkedIn, Discord, and GitHub -->
+      <div class="icons-container">
+        <a href="#" class="icon-link" @mouseover="hoveredIcon = 'linkedin'" @mouseout="hoveredIcon = ''">
+          <i :class="['fab', 'fa-linkedin-in', { 'hovered': hoveredIcon === 'linkedin' }]"></i>
+        </a>
+        <a href="#" class="icon-link" @mouseover="hoveredIcon = 'discord'" @mouseout="hoveredIcon = ''">
+          <i :class="['fab', 'fa-discord', { 'hovered': hoveredIcon === 'discord' }]"></i>
+        </a>
+        <a href="#" class="icon-link" @mouseover="hoveredIcon = 'github'" @mouseout="hoveredIcon = ''">
+          <i :class="['fab', 'fa-github', { 'hovered': hoveredIcon === 'github' }]"></i>
+        </a>
       </div>
+    </div>
+  </nav>
+</header>
 </template>
 
 <script>
 export default {
-    name: "MainNavbar",
+  // You can add component-specific logic here if needed
 };
 </script>
+
+<style>
+:root {
+  --primary-color: #101820FF;
+  --primary-light: #40464D;
+  --secondary-color: #F2AA4CFF;
+}
+
+.navbar{
+  background-color: var(--primary-color);
+}
+
+.icon-link {
+  color: white;
+  font-size: 1.2rem;
+  margin-left: 10px;
+  transition: color 0.3s ease; /* Add transition for the color property */
+}
+
+.icon-link:hover {
+  color: var(--secondary-color); /* Change the color on hover */
+}
+
+/* Add a custom class for the hovered icon */
+.hovered {
+  color: var(--secondary-color);
+}
+
+.logo-text{
+  font-size: 12px;
+  
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 v-if="isNewTask">New Task</h2>
-    <h2 v-else>Edit Task</h2>
+    <h2 v-if="isNewTask"></h2>
+    <h2 v-else></h2>
     <form @submit.prevent="submitForm">
       <div class="mb-3">
         <label for="title" class="form-label">Title:</label>

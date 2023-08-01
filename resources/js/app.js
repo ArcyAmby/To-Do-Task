@@ -36,7 +36,8 @@ import { createRouter, createWebHistory } from 'vue-router';
  */
 
 import App from './components/App.vue';
-import MainNavbar from './components/Header.vue';
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
 import TaskList from './components/TaskList.vue';
 import TaskOption from './components/TaskOption.vue';
 import Task from './components/Task.vue';
@@ -52,5 +53,8 @@ const router = createRouter({
 });
 
 const app = createApp(App);
+
+app.component('Header', Header);
+app.component('Footer', Footer);
 app.use(router);
 app.mount('#app');
