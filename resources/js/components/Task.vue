@@ -6,8 +6,6 @@
         <p>{{ task.description }}</p>
         <h5 id="associating-form-text-with-form-controls">Status:</h5>
         <p>Status: {{ task.status }}</p>
-
-        <!-- Check if the file is available and display it accordingly -->
         <div v-if="task.file_path">
             <h5>File:</h5>
             <div v-if="isImage(task.file_path)">
@@ -16,7 +14,6 @@
             <div v-else-if="isPDF(task.file_path)">
             <iframe :src="task.file_path" style="width: 100%; height: 500px;"></iframe>
             </div>
-            <!-- Add more conditions for other supported file types if needed -->
         </div>
 
 

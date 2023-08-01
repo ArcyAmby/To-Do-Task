@@ -43,7 +43,7 @@
           <div class="col-sm-2"></div>
           <div class="col-sm-12">
             <button type="submit" class="btn btn-primary" v-if="isNewTask">Add Task</button>
-            <!-- <button type="submit" class="btn btn-primary" v-else>Update Task</button> -->
+            
           </div>
         </div>
       </div>
@@ -66,24 +66,24 @@ export default {
     };
   },
   created() {
-    // Add a console.log statement to check the value of this.task
+    
     console.log(this.task);
     this.taskData = { ...this.task };
   },
   methods: {
-    // Method to handle file selection
+    
     onFileChange(event) {
       this.task.file = event.target.files[0];
     },
     async submitForm() {
       try {
         if (this.isNewTask) {
-          // Perform file upload if a file is selected
+          
           if (this.task.file) {
             const formData = new FormData();
             formData.append('file', this.task.file);
 
-            // Upload the file to the server (backend) using Laravel's storage functionality
+            
             try {
               const response = await axios.post('/api/tasks/upload-file', formData, {
                 headers: {
@@ -91,7 +91,6 @@ export default {
                 }
               });
 
-              // Set the file name and path returned from the server to the task object
               this.task.file_name = response.data.file_name;
               this.task.file_path = response.data.file_path;
             } catch (error) {
@@ -101,11 +100,8 @@ export default {
 
           await axios.post('/api/tasks', this.task);
 
-            // Emit an event to notify the parent component (App) about the new task creation
-            this.$emit('new-task-created', this.taskData);
-          // ...
-
-          // Clear the form fields
+          this.$emit('new-task-created', this.taskData);
+          
           this.task.title = '';
           this.task.description = '';
           this.task.status = '';
@@ -113,14 +109,13 @@ export default {
 
         } else {
           await axios.put(`/api/tasks/${this.task.id}`, this.task);
-          // // Fetch the updated task details from the server
           // const response = await axios.get(`/api/tasks/${this.task.id}`);
           // this.task = response.data;
         }
 
-        this.$parent.fetchTasks(); // Add this line to reload the tasks data in TaskList
+        this.$parent.fetchTasks(); 
 
-        // Emit an event to notify the parent component that a new task has been created or an existing task has been updated
+    
         this.$emit('task-updated', this.task);
 
         console.log('Submitted Task Data:', this.task);

@@ -13,7 +13,6 @@
                 </button>
               </li>
               <li>
-                <!-- Open the modal for new task creation -->
                 <button @click="showNewTaskModal" class="fancy-button new-task-button">
                   <i class="fas fa-plus"></i>
                   New Task
@@ -28,14 +27,12 @@
     <div class="card">
       <div class="card-body">
         <div class="container-fluid">
-          <!-- Pass the tasks data prop to the TaskList component -->
-          <!-- Pass the method reference for task deletion -->
           <TaskList :tasks="tasks" @task-delete="onTaskDelete" @update-tasks="onUpdateTasks" />
         </div>
       </div>
     </div>
 
-    <!-- New Task Modal -->
+
     <div v-if="showModal" class="modal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content fancy-modal">
@@ -46,7 +43,6 @@
           <div class="modal-body">
             <i v-if="!isSaving" class=""></i>
             <i v-else class="fas fa-spinner fa-spin"></i>
-            <!-- Include the TaskOption component within the modal -->
             <TaskOption :isNewTask="true" :task="emptyTask" @task-created="createTask" @new-task-created="onNewTaskCreated"
             @task-updated="onUpdateTask" />
             
@@ -72,16 +68,16 @@ export default {
   data() {
     return {
       showModal: false,
-      emptyTask: { // Provide an empty task object
+      emptyTask: { 
         title: '',
         description: '',
         status: '',
         file: null
       },
-      tasks: [], // Initialize an empty tasks array
+      tasks: [], 
       isNewTask: true,
       selectedTask: null,
-      isLoading: false, // Add this line to define the isLoading property
+      isLoading: false, 
       isSaving: false,
     };
   },
@@ -95,34 +91,26 @@ export default {
     async createTask(newTask) {
       try {
         this.isSaving = true;
-        // Call the create endpoint using Axios
         const response = await axios.post('/api/tasks', newTask);
-        // Set the ID returned from the server to the new task
         newTask.id = response.data.id;
-        // Add the new task to the local tasks array
         this.tasks.push(newTask);
-        // Close the new task modal
         this.showModal = false;
-        // Emit a custom event to notify the parent component (App) about the new task creation
         this.$emit('new-task-created', newTask);
         console.log('API Response for new task:', newTask);
       } catch (error) {
         console.error('Error creating task:', error);
       } finally {
-        this.isSaving = false; // Hide the loading spinner after saving, whether it succeeded or not
+        this.isSaving = false;
       }
     },
 
 
     async onTaskDelete(deletedTaskId) {
       try {
-        // Call the delete endpoint using Axios
         await axios.delete(`/api/tasks/${deletedTaskId}`);
-        // Handle success (e.g., show a success message, update the list, etc.)
         console.log('Task deleted successfully');
         this.fetchTasks();
       } catch (error) {
-        // Handle error (e.g., show an error message)
         console.error('Error deleting task:', error);
       }
     },
@@ -137,7 +125,6 @@ export default {
     },
 
     onUpdateTask(updatedTask, taskId) {
-      // Update the tasks array with the updated task data
       this.tasks = this.tasks.map((task) => (task.id === taskId ? updatedTask : task));
     },
 
@@ -146,9 +133,7 @@ export default {
     },
 
     onNewTaskCreated(newTask) {
-      // Close the new task modal
       this.showModal = false;
-      // Add the new task to the local tasks array
       this.tasks.push(newTask);
     },
 
@@ -160,8 +145,7 @@ export default {
     
     
   },
-  emits: ['new-task-created'], // Define the custom event that the component can emit
-  // Call the fetchTasks method in the created hook
+  emits: ['new-task-created'],
   created() {
   this.fetchTasks();
   }
@@ -185,8 +169,6 @@ export default {
   background-color: var(--primary-light);
 }
 
-
-/* Style the modal */
 .modal {
   position: fixed;
   top: 0;
@@ -204,18 +186,15 @@ export default {
   width: 90%;
 }
 
-/* Optional - Modify the modal header background color and text color */
 .modal-header {
   background-color: var(--secondary-color);
   color: #fff;
 }
 
-/* Optional - Center the modal body text */
 .modal-body {
   text-align: center;
 }
 
-/* Optional - Add some spacing between buttons in the modal footer */
 .modal-footer button {
   background-color: var(--secondary-color);
   margin-right: 10px;
@@ -258,18 +237,15 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Align text to the left in the New Task Modal */
 .modal-body {
   text-align: left;
 }
 
- /* Add space between the buttons on small screens */
  .nav li {
   margin-bottom: 10px;
 }
 
 @media (max-width: 767px) {
-  /* Center the buttons vertically on small screens */
   .app-header {
     display: flex;
     justify-content: space-between;

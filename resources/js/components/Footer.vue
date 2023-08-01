@@ -2,7 +2,6 @@
     <div class="filler-container"></div>
     <footer class="bg-light text-center py-3">
       <div class="container">
-        <!-- Add your footer content here -->
         <p>&copy; {{ currentYear }} ToDo. All rights reserved.</p>
       </div>
     </footer>
@@ -15,13 +14,12 @@
         currentYear: new Date().getFullYear(),
       };
     },
-    // You can add component-specific logic here if needed
   };
   </script>
   
   <style>
   .filler-container {
-    height: 200px; /* Adjust the height as needed */
+    height: 200px; 
   }
   
   .footer {

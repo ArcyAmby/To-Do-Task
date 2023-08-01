@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- Show loading message or spinner while fetching data -->
+  
     <div v-if="isLoading" class="text-center mt-4">
       <i class="fas fa-spinner fa-spin fa-3x"></i>
       <p>Loading...</p>
-      <!-- You can also use a spinner here -->
+     
     </div>
     
     <div v-else class="container-fluid mt-4">
@@ -54,13 +54,13 @@
           <td>{{ task.title }}</td>
           <td>{{ task.description }}</td>
           <td>{{ task.status }}</td>
-          <td>{{ task.created_at }}</td>
+          <td>{{ formatDate(task.created_at) }}</td>
           <td>
-            <!-- Show the file name if available -->
+            
             <span v-if="task.file_name">
               {{ task.file_name }}
               <div class="file-link">
-              <!-- Provide a link to download or view the file -->
+              
               <a :href="task.file_path" target="_blank" class="download-link"><i class="fas fa-download"></i></a>
               </div>
             </span>
@@ -89,7 +89,6 @@
             </div>
           </div>
           <div class="d-flex align-items-center">
-            <!-- ... (other elements if any) ... -->
           </div>
           </div>
         </div>
@@ -100,7 +99,6 @@
   </div>
   </div>
 
-    <!-- New Task Modal -->
     <div v-if="showModal" class="modal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -119,7 +117,7 @@
       </div>
     </div>
 
-    <!-- View Task Modal -->
+
 <div v-if="showViewModal" class="modal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -129,7 +127,6 @@
       </div>
       <div class="modal-body">
         <div class="modal-task-detail">
-        <!-- Display the task details in the view modal -->
         <p><strong>Task #:</strong> {{ taskToView.id }}</p>
         <p><strong>Description:</strong> {{ taskToView.description }}</p>
         <p><strong>Status:</strong> {{ taskToView.status }}</p>
@@ -138,12 +135,10 @@
         </div>
       </div>
       </div>
-      <!-- You can add footer buttons if necessary -->
     </div>
   </div>
 </div>
 
-<!-- Edit Task Modal -->
 <div v-if="showEditModal && taskToEdit" class="modal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -250,13 +245,13 @@ export default {
     };
   },
   computed: {
-    // Create a local copy of the tasks prop to work with
+    
     tasksList: {
       get() {
         return this.tasks;
       },
       set(updatedTasks) {
-        // When the local tasksList is updated, emit an event to update the parent component
+        
         this.$emit('update-tasks', updatedTasks);
       }
     },
@@ -264,10 +259,10 @@ export default {
     sortedTasks() {
       if (!this.sortKey) return this.tasksList;
 
-      // Create a copy of the tasks list to avoid modifying the original data
+      
       const tasks = [...this.tasksList];
 
-      // Sort the tasks based on the sortKey and sortDirection
+      
       tasks.sort((a, b) => {
         const keyA = this.getKeyValue(a, this.sortKey);
         const keyB = this.getKeyValue(b, this.sortKey);
@@ -282,13 +277,9 @@ export default {
   },
 
   mounted() {
-    console.log('TaskList created'); // Add this line to check if the created() hook is executed
-    console.log('Received Tasks:', this.tasks); // Log the received tasks
-
-    // Fetch the tasks data from the server initially
+    console.log('TaskList created'); 
+    console.log('Received Tasks:', this.tasks); 
     this.fetchTasks();
-
-    // Listen for the task-created event from the parent component (App.vue)
   },
   
   methods: {
@@ -300,44 +291,39 @@ export default {
       const taskId = this.taskToDelete.id;
       try {
         this.loadingTasks.push(taskId); 
-        // Call the delete endpoint using Axios
+        
         await axios.delete(`/api/tasks/${taskId}`);
-        // Handle success (e.g., show a success message, update the list, etc.)
+        
         this.tasksList = this.tasksList.filter((task) => task.id !== taskId);
         console.log('Task deleted successfully');
         this.showModal = false;
-        // Reload the list or update Vue data as needed
-
-        // Emit a custom event to notify the parent component (App) about the task deletion
-        this.$emit('task-deleted', taskId); // Emit the custom event here
+       
+        this.$emit('task-deleted', taskId); 
         
       } catch (error) {
-        // Handle error (e.g., show an error message)
+        
         console.error('Error deleting task:', error);
         this.showModal = false;
       } finally {
-        this.loadingTasks = this.loadingTasks.filter((taskId) => taskId !== taskId); // Remove the task ID from the loadingTasks array
+        this.loadingTasks = this.loadingTasks.filter((taskId) => taskId !== taskId);
       }
 
     },
 
     onUpdateTask(updatedTask, taskId) {
-      // Update the tasks array with the updated task data
       this.tasksList = this.tasksList.map((task) => (task.id === taskId ? updatedTask : task));
     },
 
     async updateTask() {
-      // Call the update endpoint using Axios
       try {
         await axios.put(`/api/tasks/${this.taskToEdit.id}`, this.taskToEdit);
         console.log('Task updated successfully');
 
-        // Update the tasks array with the edited task data
         this.tasksList = this.tasksList.map((task) =>
           task.id === this.taskToEdit.id ? this.taskToEdit : task
         );
 
-        // Close the modal
+
         this.showEditModal = false;
       } catch (error) {
         console.error('Error updating task:', error);
@@ -346,10 +332,7 @@ export default {
 
     async onTaskCreated(newTask) {
       try {
-        // Add the new task to the local tasks array
         this.tasks.push(newTask);
-
-        // Log the API response in the console
         console.log('API Response for new task:', newTask);
       } catch (error) {
         console.error('Error creating task:', error);
@@ -365,7 +348,7 @@ export default {
         this.isLoading = false;
       } catch (error) {
         console.error(error);
-        this.isLoading = false; // Set isLoading to false even if there's an error
+        this.isLoading = false; 
       }
     },
         showDeleteModal(task) {
@@ -377,9 +360,7 @@ export default {
         this.showViewModal = true;
       },
       toggleEditModal(task) {
-          // Create a deep copy of the task being edited and store it in taskBeingEdited
         this.taskToEdit = { ...task };
-        // Show the edit modal
         this.showEditModal = true;
       },
 
@@ -394,20 +375,30 @@ export default {
       return value;
     },
 
-    // Method to trigger sorting
     sortBy(key) {
       if (this.sortKey === key) {
-        // Toggle the sort direction if the same key is clicked
         this.sortDirection *= -1;
       } else {
-        // Set the new sort key and default to ascending direction
         this.sortKey = key;
         this.sortDirection = 1;
       }
     },
+
+    formatDate(dateString) {
+    const options = {
+      timeZone: 'Asia/Manila',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+    const formattedDate = new Date(dateString).toLocaleString(undefined, options);
+    return formattedDate;
+  },
   },
   created() {
-    console.log('Tasks:', this.tasks); // Add this line to check the tasks data
+    console.log('Tasks:', this.tasks); 
   }
 
   
@@ -415,7 +406,6 @@ export default {
 </script>
 
 <style>
-/* Style the modal */
 
 :root {
 --primary-color: #101820FF;
@@ -439,18 +429,17 @@ max-width: 400px;
 width: 90%;
 }
 
-/* Optional - Modify the modal header background color and text color */
 .modal-header {
 background-color: var(--secondary-color);
 color: #fff;
 }
 
-/* Optional - Center the modal body text */
+
 .modal-body {
 text-align: center;
 }
 
-/* Optional - Add some spacing between buttons in the modal footer */
+
 .modal-footer button {
 background-color: var(--secondary-color);
 margin-right: 10px;
@@ -467,10 +456,9 @@ border-style: none;
 
 .modal-task-detail {
   text-align: left;
-  /* Add more custom styles as needed */
+
 }
 
-/* Style for input forms */
 .modal-input {
   width: 100%;
   padding: 0.5rem;
@@ -485,18 +473,17 @@ border-style: none;
 
 @media (max-width: 767px) {
   .table thead {
-    display: none; /* Hide the table header on mobile */
+    display: none;
   }
 
   .table tbody tr {
-    display: block; /* Convert table rows to blocks on mobile */
+    display: block; 
     border: 1px solid #ccc;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
   .table tbody td {
-    /* Reset styles and add new styles */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -505,7 +492,6 @@ border-style: none;
     padding: 8px;
   }
 
-  /* Only show the title and actions on mobile */
   .table tbody td:nth-child(1) {
     display: none;
   }
@@ -537,5 +523,4 @@ border-style: none;
     width: 100%;
   }
 }
-
 </style>

@@ -7,8 +7,6 @@
         <p class="logo-text">Simple To Do List with CRUD</p>
       </router-link>
       
-
-      <!-- Add Font Awesome icons for LinkedIn, Discord, and GitHub -->
       <div class="icons-container">
         <a href="https://www.linkedin.com/in/arsenio-ambayec" target="_blank" class="icon-link" @mouseover="hoveredIcon = 'linkedin'" @mouseout="hoveredIcon = ''">
           <i :class="['fab', 'fa-linkedin-in', { 'hovered': hoveredIcon === 'linkedin' }]"></i>
@@ -27,7 +25,6 @@
 
 <script>
 export default {
-  // You can add component-specific logic here if needed
 };
 </script>
 
@@ -46,14 +43,13 @@ export default {
   color: white;
   font-size: 1.2rem;
   margin-left: 10px;
-  transition: color 0.3s ease; /* Add transition for the color property */
+  transition: color 0.3s ease; 
 }
 
 .icon-link:hover {
-  color: var(--secondary-color); /* Change the color on hover */
+  color: var(--secondary-color); 
 }
 
-/* Add a custom class for the hovered icon */
 .hovered {
   color: var(--secondary-color);
 }
