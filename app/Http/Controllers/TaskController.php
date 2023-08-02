@@ -57,8 +57,6 @@ class TaskController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'description' => '',
-            'status' => '',
         ]);
 
         return Task::create($request->all());
@@ -87,8 +85,6 @@ class TaskController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'description' => '',
-            'status' => ''
         ]);
 
         $task->update($request->all());

@@ -114,6 +114,7 @@ export default {
         console.error('Error deleting task:', error);
       }
     },
+    
     async fetchTasks() {
       try {
         const response = await axios.get('/api/tasks');
